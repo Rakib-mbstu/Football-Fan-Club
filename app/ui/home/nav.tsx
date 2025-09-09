@@ -19,6 +19,12 @@ export default function Nav() {
             Points Table
           </Link>
           <Link
+            href="/headToHead"
+            className="hover:text-blue-400"
+          >
+            Head to Head (stats)
+          </Link>
+          <Link
             href="/favorites"
             className="hover:text-blue-400"
           >

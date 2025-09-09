@@ -4,9 +4,7 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center text-center">
-      {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        {/* Mobile background */}
         <div className="sm:hidden">
           <Image
             src="/images/tm-mobile.jpg"
@@ -16,7 +14,6 @@ export default function Hero() {
             priority
           />
         </div>
-        {/* Desktop background */}
         <div className="hidden sm:block">
           <Image
             src="/images/tm.jpg"
@@ -26,13 +23,10 @@ export default function Hero() {
             priority
           />
         </div>
-
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/70 to-purple-600/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-300/70 to-purple-300/70"></div>
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-white">
+      <div className="relative z-10 container mx-auto px-4 text-blue-900 bg-white-100">
         <h1 className="text-4xl sm:text-6xl font-extrabold mb-4">
           Welcome to Football Fan Hub
         </h1>

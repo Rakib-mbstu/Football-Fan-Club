@@ -1,4 +1,3 @@
-"use client";
 import { standings } from "@/app/data/data";
 export default function PointsTable() {
   return (
