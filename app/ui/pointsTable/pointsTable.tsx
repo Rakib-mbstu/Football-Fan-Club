@@ -1,5 +1,5 @@
-import { standings } from "@/app/data/data";
-export default function PointsTable() {
+import Image from "next/image";
+export default function PointsTable({ standing }: { standing: any }) {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">
@@ -18,24 +18,26 @@ export default function PointsTable() {
           </tr>
         </thead>
         <tbody>
-          {standings.map((team) => (
+          {standing.map((team) => (
             <tr
-              key={team.rank}
+              key={team.team.id}
               className="bg-gray-800 border-b border-gray-700 hover:bg-gray-600"
             >
-              <td className="p-3">{team.rank}</td>
+              <td className="p-3">{team.position}</td>
               <td className="p-3 flex items-center space-x-2">
-                <img
-                  src={team.team.logo}
+                <Image
+                  src={team.team.crest}
                   alt={team.team.name}
+                  width={24}
+                  height={24}
                   className="w-6 h-6"
                 />
                 <span>{team.team.name}</span>
               </td>
-              <td className="p-3">{team.played}</td>
-              <td className="p-3 hidden sm:table-cell">{team.wins}</td>
-              <td className="p-3 hidden sm:table-cell">{team.draws}</td>
-              <td className="p-3 hidden sm:table-cell">{team.losses}</td>
+              <td className="p-3">{team.playedGames}</td>
+              <td className="p-3 hidden sm:table-cell">{team.won}</td>
+              <td className="p-3 hidden sm:table-cell">{team.draw}</td>
+              <td className="p-3 hidden sm:table-cell">{team.lost}</td>
               <td className="p-3 hidden sm:table-cell">{team.goalsFor}</td>
               <td className="p-3 hidden sm:table-cell">{team.goalsAgainst}</td>
               <td className="p-3 hidden sm:table-cell">

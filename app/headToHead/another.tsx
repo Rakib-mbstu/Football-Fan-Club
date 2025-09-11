@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { log } from "node:console";
+import { useEffect, useState } from "react";
+import { getLeagueInfo } from "../lib/action";
 
 export default function FootballComparison() {
   const [comparisonType, setComparisonType] = useState("teams");
@@ -189,7 +191,7 @@ export default function FootballComparison() {
     },
   };
 
-  const getTeamData = (teamName) => {
+  const getTeamData = (teamName: string) => {
     return teamData[teamName] || teamData["Real Madrid"];
   };
 
@@ -234,14 +236,14 @@ export default function FootballComparison() {
   const renderTeamComparison = () => (
     <>
       {/* Team Selection */}
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+      <div className="bg-gray-800 rounded-lg shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-blue-600 mb-2">
               Team A
             </label>
             <select
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+              className="w-full p-3 border bg-gray-800 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
               value={selectedTeams.teamA}
               onChange={(e) =>
                 setSelectedTeams({ ...selectedTeams, teamA: e.target.value })
@@ -262,7 +264,7 @@ export default function FootballComparison() {
               Team B
             </label>
             <select
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+              className="w-full p-3 bg-gray-800 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
               value={selectedTeams.teamB}
               onChange={(e) =>
                 setSelectedTeams({ ...selectedTeams, teamB: e.target.value })
@@ -490,14 +492,14 @@ export default function FootballComparison() {
   const renderPlayerComparison = () => (
     <>
       {/* Player Selection */}
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+      <div className="bg-gray-800 rounded-lg shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-blue-600 mb-2">
               Player A
             </label>
             <select
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+              className="w-full p-3 border bg-gray-800 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
               value={selectedPlayers.playerA}
               onChange={(e) =>
                 setSelectedPlayers({
@@ -521,7 +523,7 @@ export default function FootballComparison() {
               Player B
             </label>
             <select
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
+              className="w-full p-3 border bg-gray-800 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
               value={selectedPlayers.playerB}
               onChange={(e) =>
                 setSelectedPlayers({
@@ -801,6 +803,11 @@ export default function FootballComparison() {
       </div>
     </>
   );
+
+  useEffect(() => {
+    const leagueDoc = async () => await getLeagueInfo(39, 2023);
+    leagueDoc();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900">

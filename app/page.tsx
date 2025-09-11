@@ -4,11 +4,26 @@ import { recentMatches, upcomingFixtures } from "./data/data";
 import MatchCard from "./ui/home/matchCard";
 import Nav from "./ui/home/nav";
 import Hero from "./ui/home/hero";
+import { useEffect } from "react";
+import handler from "./lib/league";
+import fetchTop5Leagues from "./lib/league";
 
 export default function Home() {
   // Simulate session for login/logout (no real auth for now)
   const isLoggedIn = false; // Replace with actual auth logic later
-
+  useEffect(() => {
+    async function getStandings() {
+      try {
+        const response = await fetch("/api/standings");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Standings Data:", data);
+      } catch (err) {}
+    }
+    getStandings();
+  }, []);
   return (
     <>
       <Hero />
