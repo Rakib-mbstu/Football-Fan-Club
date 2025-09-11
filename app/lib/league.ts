@@ -11,7 +11,7 @@ async function fetchTop5Leagues() {
 
   // Base URL for Football-Data.org API
   const BASE_URL = 'http://api.football-data.org/v4/competitions';
-  const API_TOKEN = 'daf993e2ecf1493a9756135503147f15';
+  const API_TOKEN = process.env.FOOTBALL_DATA_API_TOKEN;
 
   if (!API_TOKEN) {
     throw new Error('API token is missing. Please set FOOTBALL_DATA_API_TOKEN in .env.local');
