@@ -1,6 +1,5 @@
 import { log } from "node:console";
 import { useEffect, useState } from "react";
-import { getLeagueInfo } from "../lib/action";
 
 export default function FootballComparison() {
   const [comparisonType, setComparisonType] = useState("teams");

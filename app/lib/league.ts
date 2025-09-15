@@ -39,8 +39,7 @@ async function fetchTop5Leagues() {
       return null;
     }
   }
-
-  // Fetch standings for all top 5 leagues
+  
   const standingsData = [];
   for (const league of leagues) {
     const data = await fetchLeagueStandings(league.id, league.name);

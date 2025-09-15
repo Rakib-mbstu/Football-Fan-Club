@@ -1,66 +1,44 @@
-"use client";
-import Link from "next/link";
-import { recentMatches, upcomingFixtures } from "./data/data";
-import MatchCard from "./ui/home/matchCard";
-import Nav from "./ui/home/nav";
 import Hero from "./ui/home/hero";
-import { useEffect } from "react";
-import handler from "./lib/league";
-import fetchTop5Leagues from "./lib/league";
+import dynamic from "next/dynamic";
+import MatchCardSkeleton from "./ui/home/MatchCardSkeleton";
 
-export default function Home() {
-  // Simulate session for login/logout (no real auth for now)
-  const isLoggedIn = false; // Replace with actual auth logic later
-  useEffect(() => {
-    async function getStandings() {
-      try {
-        const response = await fetch("/api/standings");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log("Standings Data:", data);
-      } catch (err) {}
-    }
-    getStandings();
-  }, []);
-  return (
+const MatchesServer = dynamic(() => import("./ui/home/MatchesServer"), {
+  ssr: true,
+  loading: () => (
     <>
-      <Hero />
-
-      {/* Recent Matches */}
       <section className="py-10">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">
             Recent Matches
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentMatches.map((match) => (
-              <MatchCard
-                key={match.id}
-                match={match}
-              />
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <MatchCardSkeleton key={`recent-${idx}`} />
             ))}
           </div>
         </div>
       </section>
-
-      {/* Upcoming Fixtures */}
       <section className="py-10 bg-gray-800">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-6 text-center">
             Upcoming Fixtures
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingFixtures.map((match) => (
-              <MatchCard
-                key={match.id}
-                match={match}
-              />
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <MatchCardSkeleton key={`upcoming-${idx}`} />
             ))}
           </div>
         </div>
       </section>
+    </>
+  ),
+});
+
+export default function Home() {
+  return (
+    <>
+      <Hero />
+      <MatchesServer />
     </>
   );
 }
