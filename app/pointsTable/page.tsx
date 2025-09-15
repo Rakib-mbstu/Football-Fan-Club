@@ -20,19 +20,8 @@ export default async function LeaguePage() {
                 (sum: number, team: any) => sum + team.playedGames,
                 0
               ) / 2,
-            topGoalScorer: {
-              name: "Harry Kane",
-              team: "Tottenham Hotspur",
-              goals: 22,
-            },
-            topAssistProvider: {
-              name: "Kevin De Bruyne",
-              team: "Manchester City",
-              assists: 18,
-            },
-            topCleanSheetTeam: { name: "Manchester City", cleanSheets: 18 },
           };
-          const pointsTableData = league.standings;
+          const pointsTableData = league.standings.slice(0, 5);
           return (
             <div
               className="container mx-auto"

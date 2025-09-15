@@ -22,24 +22,6 @@ export default function LeagueDetails({
           <p>
             <strong>Total Matches Played:</strong> {leagueDetails.totalMatches}
           </p>
-          {/* <p>
-            <strong>Top Goal Scorer:</strong> {leagueDetails.topGoalScorer.name}{" "}
-            ({leagueDetails.topGoalScorer.team},{" "}
-            {leagueDetails.topGoalScorer.goals} goals)
-          </p>
-        </div>
-        <div>
-          <p>
-            <strong>Top Assist Provider:</strong>{" "}
-            {leagueDetails.topAssistProvider.name} (
-            {leagueDetails.topAssistProvider.team},{" "}
-            {leagueDetails.topAssistProvider.assists} assists)
-          </p>
-          <p>
-            <strong>Top Clean Sheet Team:</strong>{" "}
-            {leagueDetails.topCleanSheetTeam.name} (
-            {leagueDetails.topCleanSheetTeam.cleanSheets} clean sheets)
-          </p> */}
         </div>
       </div>
     </div>
