@@ -21,7 +21,7 @@ async function fetchTop5Leagues() {
   console.log(`Fetching standings for`);
   async function fetchLeagueStandings(leagueId: string|number, leagueName: string|number) {
     try {
-      const response = await fetch(`${BASE_URL}/${leagueId}/standings`, {
+      const response = await fetch(`${BASE_URL}/${leagueId}/standings?season=2025`, {
         headers: { 'X-Auth-Token': API_TOKEN },
         next: { revalidate : 24*60*60}
       });

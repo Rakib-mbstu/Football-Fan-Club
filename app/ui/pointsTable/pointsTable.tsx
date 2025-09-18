@@ -1,5 +1,6 @@
 import Image from "next/image";
 export default function PointsTable({ standing }: { standing: any }) {
+  console.log("table" + JSON.stringify(standing));
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">
@@ -7,10 +8,10 @@ export default function PointsTable({ standing }: { standing: any }) {
           <tr className="bg-gray-700 text-white">
             <th className="p-3">Pos</th>
             <th className="p-3">Team</th>
-            <th className="p-3">P</th>
-            <th className="p-3 hidden sm:table-cell">W</th>
-            <th className="p-3 hidden sm:table-cell">D</th>
-            <th className="p-3 hidden sm:table-cell">L</th>
+            <th className="p-3">Played</th>
+            <th className="p-3 hidden sm:table-cell">Win</th>
+            <th className="p-3 hidden sm:table-cell">Draw</th>
+            <th className="p-3 hidden sm:table-cell">Lose</th>
             <th className="p-3 hidden sm:table-cell">GF</th>
             <th className="p-3 hidden sm:table-cell">GA</th>
             <th className="p-3 hidden sm:table-cell">GD</th>

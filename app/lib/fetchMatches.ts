@@ -2,7 +2,7 @@
 async function fetchMatches() {
   const leagues = [
     { name: 'Premier League', id: 'PL' },
-     { name: 'La Liga', id: 'PD' },
+    { name: 'La Liga', id: 'PD' },
     { name: 'Bundesliga', id: 'BL1' },
     { name: 'Serie A', id: 'SA' },
     { name: 'Ligue 1', id: 'FL1' },
