@@ -1,7 +1,13 @@
+import { auth, signOut } from "@/auth";
 import Link from "next/link";
 
-export default function Nav() {
-  const isLoggedIn = false; // Replace with actual auth logic later
+export default async function Nav() {
+  const session = await auth();
+  const isLoggedIn = !!session?.user;
+  const logout = async () => {
+    "use server";
+    await signOut();
+  };
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -31,7 +37,12 @@ export default function Nav() {
             Favorites
           </Link>
           {isLoggedIn ? (
-            <button className="hover:text-blue-400">Logout</button>
+            <button
+              className="hover:text-blue-400"
+              onClick={logout}
+            >
+              Logout
+            </button>
           ) : (
             <Link
               href="/login"

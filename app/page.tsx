@@ -1,6 +1,9 @@
+import { Suspense } from "react";
 import Hero from "./ui/home/hero";
 import dynamic from "next/dynamic";
 import MatchCardSkeleton from "./ui/home/MatchCardSkeleton";
+import ErrorBoundary from "next/dist/client/components/error-boundary";
+import ErrorDisplay from "./ui/home/ErrorDisplay";
 
 const MatchesServer = dynamic(() => import("./ui/home/MatchesServer"), {
   ssr: true,
