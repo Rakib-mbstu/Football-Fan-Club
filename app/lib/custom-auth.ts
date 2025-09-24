@@ -1,6 +1,5 @@
-import bcrypt from "bcryptjs";
-import { randomBytes } from "crypto";
 import { db, User } from "./db";
+import bcrypt from "bcryptjs";
 
 // Auth types
 export interface SignUpData {
@@ -18,11 +17,9 @@ export interface AuthUser {
   id: number;
   email: string;
   name?: string;
-  emailVerified: boolean;
 }
 
 export interface SessionData {
-  sessionId: string;
   user: AuthUser;
   expiresAt: Date;
 }
@@ -51,7 +48,7 @@ export const password = {
 };
 
 // Validation utilities
-export const validation = {
+const validation = {
   isValidEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -107,9 +104,9 @@ export const validation = {
 };
 
 // Session utilities
-export const session = {
+const session = {
   generateSessionId(): string {
-    return randomBytes(32).toString("hex");
+    return "";
   },
 
   createExpiryDate(): Date {
@@ -117,18 +114,15 @@ export const session = {
   },
 
   async create(user: User): Promise<SessionData> {
-    const sessionId = this.generateSessionId();
     const expiresAt = this.createExpiryDate();
 
-    await db.createSession(user.id, sessionId, expiresAt);
+    // await db.createSession(user.id, expiresAt);
 
     return {
-      sessionId,
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
-        emailVerified: user.email_verified,
       },
       expiresAt,
     };
@@ -139,12 +133,10 @@ export const session = {
     if (!sessionData) return null;
 
     return {
-      sessionId: sessionData.id,
       user: {
         id: sessionData.user.id,
         email: sessionData.user.email,
         name: sessionData.user.name,
-        emailVerified: sessionData.user.email_verified,
       },
       expiresAt: sessionData.expires_at,
     };
@@ -160,7 +152,7 @@ export const session = {
 };
 
 // Main auth functions
-export const auth = {
+export const customAuth = {
   async signUp(
     data: SignUpData
   ): Promise<
@@ -198,7 +190,6 @@ export const auth = {
           id: user.id,
           email: user.email,
           name: user.name,
-          emailVerified: user.email_verified,
         },
       };
     } catch (error) {
@@ -240,7 +231,6 @@ export const auth = {
 
       // Create session
       const sessionData = await session.create(user);
-      console.log("suckess");
       return {
         success: true,
         session: sessionData,

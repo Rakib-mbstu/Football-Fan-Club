@@ -83,21 +83,13 @@ export const db = {
   },
 
   // Session operations
-  async createSession(
-    userId: number,
-    sessionId: string,
-    expiresAt: Date
-  ): Promise<Session> {
+  async createSession(userId: number, expiresAt: Date): Promise<Session> {
     const query = `
       INSERT INTO sessions (id, user_id, expires_at)
       VALUES ($1, $2, $3)
       RETURNING id, user_id, expires_at, created_at
     `;
-    const result = await this.query<Session>(query, [
-      sessionId,
-      userId,
-      expiresAt,
-    ]);
+    const result = await this.query<Session>(query, [userId, expiresAt]);
     return result[0];
   },
 

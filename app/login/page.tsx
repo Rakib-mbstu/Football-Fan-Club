@@ -1,30 +1,22 @@
 "use client";
 import { loginUser } from "../lib/action";
+import { useActionState, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const data = {
-      email: formData.get("email") || "",
-      password: formData.get("password") || "",
-    };
-    console.log(data);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const [state, formAction, isPending] = useActionState(loginUser, {
+    success: false,
+    errors: [],
+  });
 
-    try {
-      const response = await loginUser(data);
-      console.log(response);
-    } catch (error) {
-      console.error("Error during login:", error);
-    }
-  };
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 px-6 py-12">
       <h1 className="mb-8 text-4xl font-bold text-white">Login</h1>
       <form
         className="w-full max-w-sm space-y-6"
-        onSubmit={handleSubmit}
+        action={formAction}
       >
         <div>
           <label
@@ -56,6 +48,14 @@ export default function LoginPage() {
             required
           />
         </div>
+        {(error || (state && state.errors && state.errors.length > 0)) && (
+          <div className="text-red-400 text-sm">
+            {error}
+            {state &&
+              state.errors &&
+              state.errors.map((err, idx) => <div key={idx}>{err}</div>)}
+          </div>
+        )}
         <button
           type="submit"
           className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"

@@ -1,5 +1,6 @@
 "use server";
-import { auth, SignInData } from "./auth";
+import { signIn } from "@/auth";
+import { customAuth, SignInData } from "./custom-auth";
 
 export interface ApiResponse {
   success: boolean;
@@ -8,7 +9,15 @@ export interface ApiResponse {
     id: number;
     email: string;
     name?: string;
-    emailVerified: boolean;
+  };
+  session?: {
+    sessionId: string;
+    user: {
+      id: number;
+      email: string;
+      name?: string;
+    };
+    expiresAt: Date;
   };
 }
 
@@ -18,7 +27,7 @@ export async function createUser(data: {
   password: string;
 }): Promise<ApiResponse> {
   try {
-    const result = await auth.signUp(data);
+    const result = await customAuth.signUp(data);
     return result;
   } catch (error) {
     console.error("Error creating user:", error);
@@ -29,10 +38,15 @@ export async function createUser(data: {
   }
 }
 
-export async function loginUser(data: SignInData): Promise<ApiResponse> {
+export async function loginUser(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  console.log("Form Data:", formData);
   try {
-    const result = await auth.signIn(data);
-    return result;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    await signIn("credentials", { email, password, redirect: false });
   } catch (error) {
     console.error("Error logging in user:", error);
     return {
