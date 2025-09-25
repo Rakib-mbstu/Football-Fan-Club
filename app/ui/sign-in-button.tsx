@@ -1,14 +1,32 @@
-import { signIn } from "@/auth";
+"use client";
+import { signOut } from "@/auth";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { logoutUser } from "../lib/action";
 
 export default function SignInButton() {
-  const handleSignIn = async () => {};
+  const isLoggedIn = useSession().status === "authenticated";
+  const logout = async () => {
+    await logoutUser();
+  };
 
   return (
-    <button
-      type="submit"
-      className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
-    >
-      Login
-    </button>
+    <>
+      {isLoggedIn ? (
+        <button
+          className="hover:text-blue-400"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      ) : (
+        <Link
+          href="/login"
+          className="hover:text-blue-400"
+        >
+          Login
+        </Link>
+      )}
+    </>
   );
 }

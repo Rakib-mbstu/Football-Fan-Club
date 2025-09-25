@@ -1,5 +1,5 @@
 "use server";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { customAuth, SignInData } from "./custom-auth";
 
 export interface ApiResponse {
@@ -54,4 +54,7 @@ export async function loginUser(
       errors: ["An error occurred while logging in"],
     };
   }
+}
+export async function logoutUser() {
+  await signOut({ redirect: false });
 }
