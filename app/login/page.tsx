@@ -2,6 +2,7 @@
 import { loginUser } from "../lib/action";
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
+import GitHubSignIn from "../ui/github-signin";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -63,6 +64,7 @@ export default function LoginPage() {
           Login
         </button>
       </form>
+      <GitHubSignIn />
     </div>
   );
 }

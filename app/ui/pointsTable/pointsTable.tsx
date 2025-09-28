@@ -1,6 +1,5 @@
 import Image from "next/image";
 export default function PointsTable({ standing }: { standing: any }) {
-  console.log("table" + JSON.stringify(standing));
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">

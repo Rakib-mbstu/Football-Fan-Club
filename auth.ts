@@ -4,11 +4,13 @@ import NextAuth from "next-auth";
 import { customAuth } from "@/app/lib/custom-auth";
 
 import { authConfig } from "./auth.config";
+import GitHub from "next-auth/providers/github";
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
   session: { strategy: "jwt" },
   providers: [
+    GitHub,
     Credentials({
       credentials: {
         email: { label: "Email", type: "text" },
