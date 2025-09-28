@@ -1,13 +1,13 @@
 "use client";
-import { signOut } from "@/auth";
-import { useSession } from "next-auth/react";
+// import { signOut } from "@/auth";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { logoutUser } from "../lib/action";
 
 export default function SignInButton() {
   const isLoggedIn = useSession().status === "authenticated";
   const logout = async () => {
-    await logoutUser();
+    await signOut();
   };
 
   return (

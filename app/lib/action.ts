@@ -38,15 +38,24 @@ export async function createUser(data: {
   }
 }
 
-export async function loginUser(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  console.log("Form Data:", formData);
+export async function loginUser(prevState: any, formData: FormData) {
   try {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    await signIn("credentials", { email, password, redirect: false });
+
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    // Check if sign in was successful
+    if (result?.error) {
+      return {
+        success: false,
+        errors: [result.error || "Invalid credentials"],
+      };
+    }
   } catch (error) {
     console.error("Error logging in user:", error);
     return {

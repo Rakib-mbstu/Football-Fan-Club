@@ -1,23 +1,49 @@
 "use client";
-import { loginUser } from "../lib/action";
-import { useActionState, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import GitHubSignIn from "../ui/github-signin";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const [state, formAction, isPending] = useActionState(loginUser, {
-    success: false,
-    errors: [],
-  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Invalid credentials");
+      }
+      if (result?.ok) {
+        router.push("/");
+      }
+    } catch (err) {
+      setError("An error occurred during login");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 px-6 py-12">
       <h1 className="mb-8 text-4xl font-bold text-white">Login</h1>
       <form
         className="w-full max-w-sm space-y-6"
-        action={formAction}
+        onSubmit={handleSubmit}
       >
         <div>
           <label
@@ -49,19 +75,13 @@ export default function LoginPage() {
             required
           />
         </div>
-        {(error || (state && state.errors && state.errors.length > 0)) && (
-          <div className="text-red-400 text-sm">
-            {error}
-            {state &&
-              state.errors &&
-              state.errors.map((err, idx) => <div key={idx}>{err}</div>)}
-          </div>
-        )}
+        {error && <div className="text-red-400 text-sm">{error}</div>}
         <button
           type="submit"
-          className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+          disabled={isLoading}
+          className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
         >
-          Login
+          {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
       <GitHubSignIn />

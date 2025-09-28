@@ -33,8 +33,8 @@ export default function RootLayout({
         <div className="min-h-screen bg-gray-900 text-white">
           <SessionProvider>
             <Nav />
+            {children}
           </SessionProvider>
-          {children}
         </div>
       </body>
     </html>
