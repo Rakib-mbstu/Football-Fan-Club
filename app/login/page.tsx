@@ -40,7 +40,8 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-900 px-6 py-12">
-      <h1 className="mb-8 text-4xl font-bold text-white">Login</h1>
+      <h1 className="mb-8 text-4xl font-bold text-white">Sign In</h1>
+      <GitHubSignIn />
       <form
         className="w-full max-w-sm space-y-6"
         onSubmit={handleSubmit}
@@ -84,7 +85,6 @@ export default function LoginPage() {
           {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
-      <GitHubSignIn />
     </div>
   );
 }
